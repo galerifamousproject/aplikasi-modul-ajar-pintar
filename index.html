@@ -3,83 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modul Ajar Pintar - Galeri Famous Project</title>
+    <title>Administrasi Guru Pintar - Galeri Famous Project</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <script src="https://unpkg.com/docx@7.1.0/build/index.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
     <style>
-        :root { --primary: #4338ca; --secondary: #db2777; --success: #059669; --bg: #f8fafc; }
-        
-        /* Smooth Element Transition */
-        * { 
-            margin: 0; padding: 0; box-sizing: border-box; 
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
-        }
-        
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: #1e293b; overflow-x: hidden; }
+        :root { --primary: #4338ca; --secondary: #db2777; --bg: #f8fafc; --paper: #ffffff; }
+        * { margin: 0; padding: 0; box-sizing: border-box; transition: all 0.3s ease; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: #1e293b; line-height: 1.6; }
 
+        /* HEADER ANIMASI */
         header {
             background: linear-gradient(-45deg, #4338ca, #6366f1, #db2777, #ec4899);
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
-            padding: 5rem 1rem 7rem; text-align: center; color: white;
-            border-bottom: 4px solid rgba(255, 255, 255, 0.1);
+            padding: 4rem 1rem 6rem; text-align: center; color: white;
         }
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; }
-        }
+        @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
-        .wrapper { max-width: 1400px; margin: -5rem auto 4rem; padding: 0 1.5rem; display: grid; grid-template-columns: 460px 1fr; gap: 2.5rem; }
-        @media (max-width: 1150px) { .wrapper { grid-template-columns: 1fr; margin-top: -3rem; } }
+        .wrapper { max-width: 1400px; margin: -4rem auto 4rem; padding: 0 1.5rem; display: grid; grid-template-columns: 450px 1fr; gap: 2.5rem; }
+        @media (max-width: 1150px) { .wrapper { grid-template-columns: 1fr; margin-top: -2rem; } }
 
-        .glass-card {
-            background: rgba(255, 255, 255, 0.98); border-radius: 2.5rem; padding: 2.5rem;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1); border: 1px solid #fff;
-        }
+        /* FORM SIDEBAR */
+        .glass-card { background: white; border-radius: 2rem; padding: 2rem; box-shadow: 0 20px 50px rgba(0,0,0,0.05); border: 1px solid #fff; position: sticky; top: 20px; }
+        .form-label { display: block; font-size: 0.75rem; font-weight: 800; color: #64748b; margin-bottom: 0.5rem; text-transform: uppercase; }
+        .input-control { width: 100%; padding: 0.9rem; border-radius: 1rem; border: 2px solid #f1f5f9; background: #fcfcfc; margin-bottom: 1.2rem; outline: none; font-size: 0.9rem; }
+        .input-control:focus { border-color: var(--primary); background: #fff; }
 
-        .form-label { display: block; font-size: 0.7rem; font-weight: 800; color: #64748b; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        .btn-gen { width: 100%; padding: 1.2rem; border-radius: 1.2rem; border: none; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; font-weight: 800; cursor: pointer; box-shadow: 0 10px 20px rgba(67, 56, 202, 0.2); }
+        .btn-gen:hover { transform: translateY(-3px); filter: brightness(1.1); }
 
-        .input-control {
-            width: 100%; padding: 0.9rem 1.1rem; border-radius: 1rem; border: 2px solid #f1f5f9;
-            background: #fcfcfc; margin-bottom: 1rem; outline: none; font-size: 0.9rem;
-        }
-        .input-control:focus { 
-            border-color: var(--primary); background: #fff; 
-            transform: translateY(-2px); box-shadow: 0 4px 12px rgba(67, 56, 202, 0.1); 
-        }
+        /* KERTAS MODUL */
+        .paper { background: white; border-radius: 1rem; min-height: 1200px; padding: 4rem 5rem; box-shadow: 0 0 50px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; font-family: 'Times New Roman', serif; color: #000; text-align: justify; overflow-y: auto; }
+        .paper h1, .paper h2, .paper h3 { text-align: center; text-transform: uppercase; margin-bottom: 5px; }
+        .paper-hr { border: 1px solid #000; margin: 15px 0 25px 0; }
+        .section-title { font-weight: bold; background: #f1f5f9; padding: 5px 10px; margin: 20px 0 10px 0; border-left: 5px solid #000; }
 
-        .btn-gen {
-            width: 100%; padding: 1.2rem; border-radius: 1.2rem; border: none;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white; font-weight: 800; cursor: pointer;
-            display: flex; align-items: center; justify-content: center; gap: 10px;
-        }
-        .btn-gen:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(67, 56, 202, 0.2); }
-        .btn-gen:active { transform: scale(0.98); }
-
-        .paper {
-            background: white; border-radius: 1rem; min-height: 1000px; padding: 5rem;
-            box-shadow: 0 0 50px rgba(0,0,0,0.05); border: 1px solid #e2e8f0;
-            font-family: 'Times New Roman', serif; line-height: 1.6; text-align: justify;
-        }
-
-        footer { text-align: center; padding: 50px 20px; color: #64748b; line-height: 1.8; border-top: 1px solid #e2e8f0; margin-top: 40px; }
-        .dev-highlight { color: var(--primary); font-weight: 800; }
+        footer { text-align: center; padding: 40px; color: #94a3b8; font-size: 0.8rem; font-weight: 700; }
     </style>
 </head>
 <body>
 
     <header>
-        <h1 style="font-size: 2.8rem; font-weight: 800;">Aplikasi Modul Ajar Pintar</h1>
-        <p style="letter-spacing: 3px; text-transform: uppercase; font-weight: 300;">"Satu Laman Sejuta Pengalaman"</p>
+        <h1 style="font-size: 2.5rem; font-weight: 800;">Aplikasi Modul Ajar Pintar</h1>
+        <p style="letter-spacing: 3px; font-weight: 300;">"Solusi Administrasi Guru Masa Kini"</p>
     </header>
 
     <div class="wrapper">
         <aside class="glass-card">
-            <h3 style="margin-bottom: 25px; font-weight: 800; border-left: 4px solid var(--secondary); padding-left: 10px;">ADMINISTRASI GURU PINTAR</h3>
+            <h3 style="margin-bottom: 20px; font-weight: 800; color: var(--primary);">ADMINISTRASI GURU PINTAR</h3>
             
             <label class="form-label">Identitas Penyusun</label>
             <input type="text" id="nama" class="input-control" placeholder="Nama & Gelar">
@@ -89,9 +65,7 @@
                 <div>
                     <label class="form-label">Tahun Ajaran</label>
                     <select id="tahun" class="input-control">
-                        <option>2025/2026</option><option>2026/2027</option>
-                        <option>2027/2028</option><option>2028/2029</option>
-                        <option>2029/2030</option><option>2030/2031</option>
+                        <option>2024/2025</option><option selected>2025/2026</option><option>2026/2027</option>
                     </select>
                 </div>
                 <div>
@@ -102,60 +76,52 @@
                 </div>
             </div>
 
-            <label class="form-label">Tingkat Jenjang</label>
-            <select id="jenjang" class="input-control" onchange="updateUI()">
-                <option value="SD_MI">SD / MI (Fase A-C)</option>
-                <option value="SMP_MTS">SMP / MTs (Fase D)</option>
-                <option value="SMA_MA">SMA / MA (Fase E-F)</option>
-            </select>
-
-            <label class="form-label">Fase & Kelas</label>
-            <select id="kelas" class="input-control"></select>
-
             <label class="form-label">Mata Pelajaran</label>
+            <select id="jenjang" class="input-control" onchange="updateUI()">
+                <option value="SD_MI">SD / MI</option>
+                <option value="SMP_MTS">SMP / MTs</option>
+                <option value="SMA_MA">SMA / MA</option>
+            </select>
+            <select id="kelas" class="input-control"></select>
             <select id="mapel" class="input-control"></select>
 
             <label class="form-label">Topik Pembelajaran</label>
-            <textarea id="materi" class="input-control" rows="2" placeholder="Detail materi pokok"></textarea>
+            <textarea id="materi" class="input-control" rows="3" placeholder="Contoh: Rukun Islam, Fotosintesis, dsb."></textarea>
 
-            <button onclick="generate()" class="btn-gen"><i class="fas fa-magic"></i> GENERATE MODUL AJAR</button>
+            <button onclick="generateModul()" class="btn-gen"><i class="fas fa-magic"></i> GENERATE MODUL LENGKAP</button>
         </aside>
 
         <section>
             <div id="editor" contenteditable="true" class="paper">
-                <div style="text-align:center; color:#cbd5e1; margin-top:200px;">
-                    <i class="fas fa-file-invoice" style="font-size: 4rem; margin-bottom: 1rem;"></i>
-                    <p>Silakan isi data dan klik Generate Modul Ajar.</p>
+                <div style="text-align:center; color:#cbd5e1; margin-top:300px;">
+                    <i class="fas fa-file-invoice" style="font-size: 5rem; margin-bottom: 20px;"></i>
+                    <p>Silakan isi data dan klik Generate untuk menyusun modul profesional.</p>
                 </div>
             </div>
-            <button onclick="saveWord()" class="btn-gen" style="background: var(--success); margin-top: 1.5rem;">
-                <i class="fas fa-download"></i> DOWNLOAD MODUL (.DOCX)
+            
+            <button onclick="saveWord()" class="btn-gen" style="background: var(--success); margin-top: 1.5rem; background: #059669;">
+                <i class="fas fa-file-word"></i> DOWNLOAD MODUL (.DOCX)
             </button>
         </section>
     </div>
 
     <footer>
-        <p style="font-size: 0.9rem; font-weight: 700;">Aplikasi Modul Ajar Pintar &copy; 2026</p>
-        <p style="font-size: 0.75rem;">Developed with ❤️ by <span class="dev-highlight">Galeri Famous Project</span></p>
-        <p style="font-size: 0.7rem; max-width: 600px; margin: 10px auto; opacity: 0.7;">
-            Sistem Administrasi Guru Terpadu • Kurikulum Merdeka Terintegrasi • AI Content Engine Version 3.0 <br>
-            Cirebon, Jawa Barat, Indonesia
-        </p>
+        Galeri Famous Project &copy; 2026 | Developed for Professional Teachers
     </footer>
 
     <script>
         const db = {
             "SD_MI": {
                 kelas: ["Fase A - Kelas 1", "Fase A - Kelas 2", "Fase B - Kelas 3", "Fase B - Kelas 4", "Fase C - Kelas 5", "Fase C - Kelas 6"],
-                mapel: ["IPAS", "Bahasa Indonesia", "Matematika", "Pendidikan Pancasila", "Seni Musik", "Seni Rupa", "Seni Teater", "Seni Tari", "Bahasa Daerah", "Al-Qur'an Hadis", "Akidah Akhlak", "Fikih", "SKI", "Bahasa Arab"]
+                mapel: ["IPAS", "Bahasa Indonesia", "Matematika", "Fikih", "Akidah Akhlak", "Al-Qur'an Hadis", "SKI", "Bahasa Arab", "Seni Rupa"]
             },
             "SMP_MTS": {
                 kelas: ["Fase D - Kelas 7", "Fase D - Kelas 8", "Fase D - Kelas 9"],
-                mapel: ["IPA", "IPS", "Bahasa Indonesia", "Matematika", "Bahasa Inggris", "Informatika", "Pendidikan Pancasila", "Seni Musik", "Seni Rupa", "Seni Teater", "Seni Tari", "Bahasa Daerah", "Fikih", "SKI", "Al-Qur'an Hadis", "Akidah Akhlak", "Bahasa Arab"]
+                mapel: ["IPA", "IPS", "Bahasa Inggris", "Matematika", "Informatika", "Fikih", "Bahasa Arab"]
             },
             "SMA_MA": {
                 kelas: ["Fase E - Kelas 10", "Fase F - Kelas 11", "Fase F - Kelas 12"],
-                mapel: ["Bahasa Indonesia", "Bahasa Inggris", "Matematika", "Informatika", "Pendidikan Pancasila", "Sejarah", "Biologi", "Fisika", "Kimia", "Ekonomi", "Sosiologi", "Geografi", "Al-Qur'an Hadis", "Akidah Akhlak", "Fikih", "SKI", "Bahasa Arab"]
+                mapel: ["Biologi", "Fisika", "Kimia", "Ekonomi", "Sosiologi", "Ushul Fikih", "Tafsir"]
             }
         };
 
@@ -166,49 +132,88 @@
         }
         updateUI();
 
-        function generate() {
+        function generateModul() {
             const v = (id) => document.getElementById(id).value;
-            if(!v('nama') || !v('materi')) return alert("Mohon lengkapi Nama dan Materi!");
+            if(!v('nama') || !v('materi')) return alert("Mohon isi Nama & Materi!");
 
-            const content = `
-                <div style="text-align:center; border-bottom: 3px solid #000; padding-bottom: 10px; margin-bottom: 20px;">
-                    <h2 style="margin:0; font-size:16pt;">MODUL AJAR KURIKULUM MERDEKA</h2>
-                    <h3 style="margin:5px 0; font-size:14pt;">BERBASIS CINTA DAN KASIH SAYANG</h3>
-                    <h4 style="margin:0; font-size:13pt;">${v('sekolah').toUpperCase()}</h4>
+            const html = `
+                <div style="text-align:center;">
+                    <h2 style="font-size:16pt;">MODUL AJAR KURIKULUM MERDEKA</h2>
+                    <h2 style="font-size:14pt;">BERBASIS CINTA DAN KASIH SAYANG</h2>
+                    <h3 style="font-size:13pt;">${v('sekolah').toUpperCase()}</h3>
                 </div>
-                <p><strong>I. INFORMASI UMUM</strong></p>
-                <table style="width:100%; margin-bottom:15px; font-size:11pt;">
-                    <tr><td width="35%">Nama Penyusun</td><td>: ${v('nama')}</td></tr>
+                <div class="paper-hr"></div>
+
+                <div class="section-title">I. INFORMASI UMUM</div>
+                <table style="width:100%; font-size:11pt;">
+                    <tr><td width="30%">Nama Penyusun</td><td>: ${v('nama')}</td></tr>
                     <tr><td>Mata Pelajaran</td><td>: ${v('mapel')}</td></tr>
                     <tr><td>Jenjang / Kelas</td><td>: ${v('kelas')}</td></tr>
                     <tr><td>Semester / Tahun</td><td>: ${v('semester')} / ${v('tahun')}</td></tr>
                     <tr><td>Materi Pokok</td><td>: ${v('materi')}</td></tr>
+                    <tr><td>Alokasi Waktu</td><td>: 2 x 35 Menit (Disesuaikan)</td></tr>
                 </table>
-                <p><strong>II. KOMPONEN INTI</strong></p>
+
+                <div class="section-title">II. KOMPONEN INTI</div>
                 <p><strong>A. Tujuan Pembelajaran</strong></p>
-                <p>Melalui pendekatan kasih sayang, peserta didik diharapkan mampu memahami dan menguasai konsep ${v('materi')} secara mendalam serta bernalar kritis.</p>
-                <p><strong>B. Langkah Pembelajaran (Alur MERDEKA)</strong></p>
-                <p>1. Mulai dari Diri, 2. Eksplorasi Konsep, 3. Ruang Kolaborasi, 4. Demonstrasi Kontekstual, 5. Elaborasi Pemahaman, 6. Koneksi Antar Materi, 7. Aksi Nyata.</p>
-                <br>
-                <p style="text-align:center; font-size:9pt; color:gray;">Dihasilkan oleh Administrasi Guru Pintar - Galeri Famous Project 2026</p>
+                <p>Melalui pendekatan kasih sayang dan metode <i>Active Learning</i>, peserta didik diharapkan mampu:</p>
+                <ul>
+                    <li>Memahami konsep dasar <strong>${v('materi')}</strong> secara mendalam.</li>
+                    <li>Menganalisis keterkaitan <strong>${v('materi')}</strong> dalam kehidupan sehari-hari.</li>
+                    <li>Menunjukkan sikap bernalar kritis dan kreatif dalam menyelesaikan masalah terkait materi.</li>
+                </ul>
+
+                <p style="margin-top:15px;"><strong>B. Profil Pelajar Pancasila & P2RA</strong></p>
+                <p>1. Beriman, Bertakwa kepada Tuhan YME, dan Berakhlak Mulia.<br>
+                   2. Bernalar Kritis: Memproses informasi dan gagasan.<br>
+                   3. (P2RA) Ta’addub: Menunjukkan sikap beradab dan santun.</p>
+
+                <p style="margin-top:15px;"><strong>C. Langkah Pembelajaran (Alur MERDEKA)</strong></p>
+                <p><strong>1. Mulai dari Diri:</strong> Guru menyapa siswa dengan penuh kasih dan memberikan pertanyaan pemantik terkait ${v('materi')}.</p>
+                <p><strong>2. Eksplorasi Konsep:</strong> Peserta didik mengamati materi lewat media visual/buku teks secara mandiri.</p>
+                <p><strong>3. Ruang Kolaborasi:</strong> Siswa membentuk kelompok kecil untuk mendiskusikan tantangan terkait ${v('materi')}.</p>
+                <p><strong>4. Demonstrasi Kontekstual:</strong> Setiap kelompok mempresentasikan hasil diskusinya dengan bimbingan guru.</p>
+                <p><strong>5. Elaborasi Pemahaman:</strong> Guru memberikan penguatan dan meluruskan miskonsepsi yang terjadi.</p>
+                <p><strong>6. Koneksi Antar Materi:</strong> Siswa membuat kesimpulan hubungan ${v('materi')} dengan materi sebelumnya.</p>
+                <p><strong>7. Aksi Nyata:</strong> Siswa menerapkan nilai-nilai dari materi ${v('materi')} dalam lingkungan sekolah.</p>
+
+                <div class="section-title">III. ASESMEN & LAMPIRAN</div>
+                <p><strong>A. Jenis Asesmen</strong></p>
+                <p>- Asesmen Diagnostik (Awal): Kuis lisan untuk mengukur kesiapan.<br>
+                   - Asesmen Formatif (Proses): Observasi sikap dan aktivitas kelompok.<br>
+                   - Asesmen Sumatif (Akhir): Tes tertulis atau penugasan produk.</p>
+                
+                <p style="margin-top:15px;"><strong>B. Media Pembelajaran</strong></p>
+                <p>Buku pegangan siswa, Laptop/Proyektor, Lembar Kerja Peserta Didik (LKPD), dan Media Kontekstual.</p>
+
+                <br><br><br>
+                <table style="width:100%; text-align:center;">
+                    <tr>
+                        <td width="50%">Mengetahui,<br>Kepala Sekolah<br><br><br><br>____________________</td>
+                        <td width="50%">Jatibarang, 2026<br>Guru Mata Pelajaran<br><br><br><br><strong>${v('nama')}</strong></td>
+                    </tr>
+                </table>
+                <p style="text-align:center; font-size:8pt; color:gray; margin-top:50px;">Dihasilkan secara otomatis oleh Administrasi Guru Pintar - Galeri Famous Project 2026</p>
             `;
-            document.getElementById('editor').innerHTML = content;
-            if(window.innerWidth < 1150) document.getElementById('editor').scrollIntoView({behavior: "smooth"});
+            document.getElementById('editor').innerHTML = html;
         }
 
         async function saveWord() {
-            const { Document, Packer, Paragraph, TextRun } = docx;
-            const lines = document.getElementById('editor').innerText.split('\n').filter(l => l.trim() !== "");
+            const { Document, Packer, Paragraph, TextRun, AlignmentType } = docx;
+            const editorText = document.getElementById('editor').innerText;
+            const lines = editorText.split('\n').filter(l => l.trim() !== "");
+            
             const doc = new Document({
                 sections: [{
                     children: lines.map(line => new Paragraph({
                         children: [new TextRun({ text: line, size: 24, font: "Times New Roman" })],
-                        spacing: { after: 120 }
+                        spacing: { after: 120 },
+                        alignment: AlignmentType.JUSTIFY
                     }))
                 }]
             });
             const blob = await Packer.toBlob(doc);
-            saveAs(blob, `Modul_Pintar_${document.getElementById('mapel').value}.docx`);
+            saveAs(blob, `Modul_Ajar_${document.getElementById('mapel').value}.docx`);
         }
     </script>
 </body>
