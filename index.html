@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrasi Guru Pintar - Galeri Famous Project</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="https://unpkg.com/docx@7.1.0/build/index.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+    <style>
+        :root { --primary: #4338ca; --secondary: #db2777; --bg: #e2e8f0; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: #1e293b; line-height: 1.5; }
+
+        /* HEADER DENGAN ANIMASI WARNA OTOMATIS */
+        header {
+            background: linear-gradient(-45deg, #4338ca, #6366f1, #db2777, #ec4899);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            padding: 3rem 2rem 6rem; text-align: center; color: white;
+            border-bottom: 4px solid rgba(255, 255, 255, 0.1);
+        }
+        @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+
+        /* LAYOUT SIMETRIS TERPUSAT */
+        .main-container {
+            max-width: 1600px;
+            margin: -4rem auto 4rem;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 2.5rem;
+        }
+
+        @media (max-width: 1250px) {
+            .main-container { flex-direction: column; align-items: center; margin-top: -2rem; }
+            .sidebar { width: 100% !important; max-width: 600px; position: static !important; }
+        }
+
+        /* PANEL ADMINISTRASI GURU PINTAR (KIRI) */
+        .sidebar {
+            width: 420px;
+            background: white;
+            border-radius: 2rem;
+            padding: 2.5rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 2rem;
+            flex-shrink: 0;
+        }
+
+        /* AREA KERTAS A4 (KANAN) */
+        .preview-section {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .paper-shadow {
+            background: white;
+            width: 210mm; 
+            min-height: 297mm;
+            padding: 25mm;
+            box-shadow: 0 0 50px rgba(0,0,0,0.15);
+            font-family: 'Times New Roman', serif;
+            color: #000;
+            outline: none;
+            border-radius: 2px;
+            text-align: justify;
+        }
+
+        /* FORM STYLING */
+        .form-label { display: block; font-size: 0.75rem; font-weight: 800; color: #64748b; margin-bottom: 0.5rem; text-transform: uppercase; }
+        .input-control { width: 100%; padding: 0.9rem; border-radius: 1rem; border: 2px solid #f1f5f9; background: #fcfcfc; margin-bottom: 1.2rem; outline: none; font-size: 0.9rem; transition: 0.3s; }
+        .input-control:focus { border-color: var(--primary); background: #fff; box-shadow: 0 0 0 4px rgba(67, 56, 202, 0.1); }
+
+        .btn-gen { width: 100%; padding: 1.2rem; border-radius: 1.5rem; border: none; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 1rem; }
+        .btn-gen:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(67, 56, 202, 0.3); }
+
+        /* MODUL CONTENT STYLE (MENARIK) */
+        .modul-title { text-align: center; border-bottom: 4px double #000; padding-bottom: 10px; margin-bottom: 25px; }
+        .table-admin { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        .table-admin td { border: 1px solid #000; padding: 8px 12px; font-size: 11pt; vertical-align: top; }
+        .bg-gray { background: #f3f4f6; font-weight: bold; width: 35%; }
+        .section-header { font-weight: bold; text-decoration: underline; text-transform: uppercase; margin-top: 20px; display: block; border-bottom: 1.5px solid #000; padding-bottom: 2px; }
+
+        footer { text-align: center; padding: 60px 20px; color: #64748b; font-size: 0.85rem; font-weight: 700; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1 style="font-size: 2.8rem; font-weight: 800;">Aplikasi Modul Ajar Pintar</h1>
+        <p style="letter-spacing: 3px; font-weight: 300; text-transform: uppercase;">"Solusi Administrasi Guru Profesional"</p>
+    </header>
+
+    <div class="main-container">
+        <aside class="sidebar">
+            <h3 style="margin-bottom: 25px; font-weight: 800; color: var(--primary); border-left: 5px solid var(--secondary); padding-left: 15px;">ADMINISTRASI GURU PINTAR</h3>
+            
+            <label class="form-label">Identitas Penyusun</label>
+            <input type="text" id="nama" class="input-control" placeholder="Nama & Gelar">
+            <input type="text" id="sekolah" class="input-control" placeholder="Instansi">
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div>
+                    <label class="form-label">Tahun Ajaran</label>
+                    <select id="tahun" class="input-control">
+                        <option>2025/2026</option><option>2026/2027</option><option>2027/2028</option>
+                        <option>2028/2029</option><option>2029/2030</option><option>2030/2031</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="form-label">Semester</label>
+                    <select id="semester" class="input-control"><option>1 (Ganjil)</option><option>2 (Genap)</option></select>
+                </div>
+            </div>
+
+            <label class="form-label">Tingkat Jenjang</label>
+            <select id="jenjang" class="input-control" onchange="updateUI()">
+                <option value="SD_MI">SD / MI (Fase A-C)</option>
+                <option value="SMP_MTS">SMP / MTs (Fase D)</option>
+                <option value="SMA_MA">SMA / MA (Fase E-F)</option>
+            </select>
+
+            <label class="form-label">Fase & Kelas</label>
+            <select id="kelas" class="input-control"></select>
+
+            <label class="form-label">Mata Pelajaran (Lengkap)</label>
+            <select id="mapel" class="input-control"></select>
+
+            <label class="form-label">Materi / Topik Pokok</label>
+            <textarea id="materi" class="input-control" rows="2" placeholder="Detail materi pokok"></textarea>
+
+            <button onclick="generate()" class="btn-gen"><i class="fas fa-file-contract"></i> GENERATE MODUL LENGKAP</button>
+        </aside>
+
+        <section class="preview-section">
+            <div id="editor" contenteditable="true" class="paper-shadow">
+                <div style="text-align:center; color:#cbd5e1; margin-top:120mm;">
+                    <i class="fas fa-print" style="font-size: 5rem; margin-bottom: 20px;"></i>
+                    <p>Silakan isi data untuk melihat pratinjau simetris A4.</p>
+                </div>
+            </div>
+            
+            <button onclick="saveWord()" class="btn-gen" style="background: #059669; margin-top: 2rem; width: 210mm;">
+                <i class="fas fa-file-word"></i> DOWNLOAD MODUL (.DOCX)
+            </button>
+        </section>
+    </div>
+
+    <footer>
+        <p>Aplikasi Modul Ajar Pintar &copy; 2026</p>
+        <p style="font-size: 0.7rem; opacity: 0.8; margin-top: 5px;">Developed by Galeri Famous Project • Cirebon, Indonesia</p>
+    </footer>
+
+    <script>
+        const db = {
+            "SD_MI": {
+                kelas: ["Fase A - Kelas 1", "Fase A - Kelas 2", "Fase B - Kelas 3", "Fase B - Kelas 4", "Fase C - Kelas 5", "Fase C - Kelas 6"],
+                mapel: ["--- UTAMA ---", "IPAS", "Bahasa Indonesia", "Matematika", "Pancasila", "PJOK", "--- SENI ---", "Seni Musik", "Seni Rupa", "Seni Teater", "Seni Tari", "--- AGAMA ---", "Al-Qur'an Hadis", "Akidah Akhlak", "Fikih", "SKI", "Bahasa Arab", "--- MULOK ---", "Bahasa Jawa", "Ke-NU-an", "BTQ"]
+            },
+            "SMP_MTS": {
+                kelas: ["Fase D - Kelas 7", "Fase D - Kelas 8", "Fase D - Kelas 9"],
+                mapel: ["IPA", "IPS", "Bahasa Indonesia", "Matematika", "Bahasa Inggris", "Informatika", "Pancasila", "Al-Qur'an Hadis", "Akidah Akhlak", "Fikih", "SKI", "Bahasa Arab"]
+            },
+            "SMA_MA": {
+                kelas: ["Fase E - Kelas 10", "Fase F - Kelas 11", "Fase F - Kelas 12"],
+                mapel: ["Bahasa Indonesia", "Bahasa Inggris", "Matematika", "Sejarah", "Pancasila", "Biologi", "Fisika", "Kimia", "Ekonomi", "Sosiologi", "Geografi", "Al-Qur'an Hadis", "Akidah Akhlak", "Fikih", "SKI", "Bahasa Arab"]
+            }
+        };
+
+        function updateUI() {
+            const j = document.getElementById('jenjang').value;
+            document.getElementById('kelas').innerHTML = db[j].kelas.map(k => `<option>${k}</option>`).join("");
+            document.getElementById('mapel').innerHTML = db[j].mapel.map(m => {
+                const isH = m.startsWith("---");
+                return `<option ${isH?'disabled':''} style="${isH?'font-weight:bold;color:#4338ca;background:#f1f5f9':''}">${m}</option>`;
+            }).join("");
+        }
+        updateUI();
+
+        function generate() {
+            const v = (id) => document.getElementById(id).value;
+            if(!v('nama') || !v('materi')) return alert("Mohon lengkapi Nama dan Materi!");
+            const isMadrasah = v('jenjang').includes('MI') || v('jenjang').includes('MTS') || v('jenjang').includes('MA');
+
+            const html = `
+                <div class="modul-title">
+                    <h2 style="margin:0; font-size:16pt;">MODUL AJAR KURIKULUM MERDEKA LENGKAP</h2>
+                    <h3 style="margin:5px 0; font-size:12pt;">TAHUN PELAJARAN ${v('tahun')}</h3>
+                    <h4 style="margin:0; font-size:13pt; color:#4338ca;">${v('sekolah').toUpperCase()}</h4>
+                </div>
+
+                <span class="section-header">I. INFORMASI UMUM</span>
+                <table class="table-admin" style="margin-top:10px;">
+                    <tr><td class="bg-gray">Nama Penyusun</td><td>${v('nama')}</td></tr>
+                    <tr><td class="bg-gray">Satuan Pendidikan</td><td>${v('sekolah')}</td></tr>
+                    <tr><td class="bg-gray">Mata Pelajaran</td><td>${v('mapel')}</td></tr>
+                    <tr><td class="bg-gray">Semester / Tahun</td><td>${v('semester')} / ${v('tahun')}</td></tr>
+                    <tr><td class="bg-gray">Materi Pokok</td><td>${v('materi')}</td></tr>
+                </table>
+
+                <span class="section-header">II. KOMPONEN INTI (DEEP LEARNING)</span>
+                <p style="margin-top:10px;"><strong>A. Alur Tujuan Pembelajaran (ATP) Detail:</strong></p>
+                <p>Peserta didik mampu menganalisis substansi <strong>${v('materi')}</strong> melalui eksplorasi mendalam, mengembangkan nalar kritis dalam pemecahan masalah kontekstual, dan mengintegrasikan nilai karakter Pelajar Pancasila ${isMadrasah ? 'serta nilai Rahmatan Lil Alamin' : ''}.</p>
+                
+                <p style="margin-top:15px;"><strong>B. Langkah Pembelajaran (Alur MERDEKA):</strong></p>
+                <p>1. Mulai dari Diri, 2. Eksplorasi Konsep, 3. Ruang Kolaborasi, 4. Demonstrasi Kontekstual, 5. Elaborasi Pemahaman, 6. Koneksi Antar Materi, 7. Aksi Nyata.</p>
+
+                <span class="section-header">III. LAMPIRAN LENGKAP</span>
+                <p style="margin-top:10px;"><strong>Lembar Kerja Peserta Didik (LKPD):</strong> Analisis Kritis ${v('materi')}.<br>
+                <strong>Glosarium:</strong> Deep Learning, Kognisi, Literasi Terapan.<br>
+                <strong>Daftar Pustaka:</strong> Kemendikbudristek 2024, KMA 450 Tahun 2024.</p>
+
+                <br><br>
+                <table style="width:100%; text-align:center;">
+                    <tr>
+                        <td width="50%">Mengetahui,<br>Kepala Sekolah<br><br><br><br>____________________</td>
+                        <td>Jatibarang, 2026<br>Guru Mata Pelajaran<br><br><br><br><strong>${v('nama')}</strong></td>
+                    </tr>
+                </table>
+            `;
+            document.getElementById('editor').innerHTML = html;
+        }
+
+        async function saveWord() {
+            const { Document, Packer, Paragraph, TextRun, AlignmentType } = docx;
+            const editorText = document.getElementById('editor').innerText;
+            const lines = editorText.split('\n').filter(l => l.trim() !== "");
+            
+            const doc = new Document({
+                sections: [{
+                    children: lines.map(line => new Paragraph({
+                        children: [new TextRun({ text: line, size: 24, font: "Times New Roman" })],
+                        spacing: { after: 120 }, alignment: AlignmentType.JUSTIFY
+                    }))
+                }]
+            });
+            const blob = await Packer.toBlob(doc);
+            saveAs(blob, `Modul_Pintar_${document.getElementById('mapel').value}.docx`);
+        }
+    </script>
+</body>
+</html>
