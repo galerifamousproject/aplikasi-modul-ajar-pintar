@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrasi Guru Pintar - Galeri Famous Project</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="https://unpkg.com/docx@7.1.0/build/index.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+    <style>
+        :root { --primary: #4338ca; --secondary: #db2777; --bg: #f8fafc; }
+        * { margin: 0; padding: 0; box-sizing: border-box; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: #1e293b; line-height: 1.6; }
+
+        header {
+            background: linear-gradient(-45deg, #4338ca, #6366f1, #db2777, #ec4899);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            padding: 4rem 1rem 6rem; text-align: center; color: white;
+            border-bottom: 4px solid rgba(255, 255, 255, 0.1);
+        }
+        @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+
+        .wrapper { max-width: 1440px; margin: -5rem auto 4rem; padding: 0 1.5rem; display: grid; grid-template-columns: 420px 1fr; gap: 2.5rem; }
+        @media (max-width: 1150px) { .wrapper { grid-template-columns: 1fr; margin-top: -3rem; } }
+
+        .glass-card { background: white; border-radius: 2rem; padding: 2.5rem; box-shadow: 0 20px 50px rgba(0,0,0,0.05); border: 1px solid #fff; position: sticky; top: 20px; max-height: 90vh; overflow-y: auto; }
+        .form-label { display: block; font-size: 0.7rem; font-weight: 800; color: #64748b; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        .input-control { width: 100%; padding: 0.9rem; border-radius: 1rem; border: 2px solid #f1f5f9; background: #fcfcfc; margin-bottom: 1.2rem; outline: none; font-size: 0.9rem; }
+        .input-control:focus { border-color: var(--primary); background: #fff; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(67, 56, 202, 0.08); }
+
+        .btn-gen { width: 100%; padding: 1.2rem; border-radius: 1.5rem; border: none; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 1rem; }
+        .btn-gen:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(67, 56, 202, 0.2); }
+
+        .paper { background: white; border-radius: 0.5rem; min-height: 1500px; padding: 5rem; box-shadow: 0 0 50px rgba(0,0,0,0.1); font-family: 'Times New Roman', serif; color: #000; text-align: justify; font-size: 12pt; }
+        .section-header { font-weight: bold; text-decoration: underline; text-transform: uppercase; margin-top: 25px; margin-bottom: 10px; display: block; font-size: 13pt; }
+        .sub-header { font-weight: bold; margin-top: 15px; display: block; font-size: 12pt; }
+
+        footer { text-align: center; padding: 50px 20px; color: #64748b; border-top: 1px solid #e2e8f0; margin-top: 40px; }
+        .dev-highlight { color: var(--primary); font-weight: 800; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1 style="font-size: 2.8rem; font-weight: 800;">Aplikasi Modul Ajar Pintar</h1>
+        <p style="letter-spacing: 3px; text-transform: uppercase; font-weight: 300;">"Satu Laman Sejuta Pengalaman"</p>
+    </header>
+
+    <div class="wrapper">
+        <aside class="glass-card">
+            <h3 style="margin-bottom: 25px; font-weight: 800; border-left: 4px solid var(--secondary); padding-left: 10px;">ADMINISTRASI GURU PINTAR</h3>
+            
+            <label class="form-label">Identitas Penyusun</label>
+            <input type="text" id="nama" class="input-control" placeholder="Nama & Gelar">
+            <input type="text" id="sekolah" class="input-control" placeholder="Sekolah/Madrasah">
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div>
+                    <label class="form-label">Tahun Ajaran</label>
+                    <select id="tahun" class="input-control">
+                        <option>2025/2026</option><option>2026/2027</option><option>2027/2028</option>
+                        <option>2028/2029</option><option>2029/2030</option><option>2030/2031</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="form-label">Semester</label>
+                    <select id="semester" class="input-control"><option>1 (Ganjil)</option><option>2 (Genap)</option></select>
+                </div>
+            </div>
+
+            <label class="form-label">Jenjang Pendidikan</label>
+            <select id="jenjang" class="input-control" onchange="updateUI()">
+                <option value="SD_MI">SD / MI (Fase A-C)</option>
+                <option value="SMP_MTS">SMP / MTs (Fase D)</option>
+                <option value="SMA_MA">SMA / MA (Fase E-F)</option>
+            </select>
+
+            <label class="form-label">Fase & Kelas</label>
+            <select id="kelas" class="input-control"></select>
+
+            <label class="form-label">Mata Pelajaran (Termasuk Mulok & Seni)</label>
+            <select id="mapel" class="input-control"></select>
+
+            <label class="form-label">Topik Pembelajaran</label>
+            <textarea id="materi" class="input-control" rows="2" placeholder="Detail materi pokok"></textarea>
+
+            <label class="form-label">Model Pembelajaran</label>
+            <select id="model_ajar" class="input-control">
+                <option>Problem Based Learning (PBL)</option>
+                <option>Project Based Learning (PjBL)</option>
+                <option>Discovery Learning</option>
+            </select>
+
+            <button onclick="generate()" class="btn-gen"><i class="fas fa-magic"></i> GENERATE MODUL LENGKAP</button>
+        </aside>
+
+        <section>
+            <div id="editor" contenteditable="true" class="paper">
+                <div style="text-align:center; color:#cbd5e1; margin-top:400px;">
+                    <i class="fas fa-file-shield" style="font-size: 5rem; margin-bottom: 20px;"></i>
+                    <p>Siap menyusun administrasi lengkap sesuai regulasi terbaru.</p>
+                </div>
+            </div>
+            <button onclick="saveWord()" class="btn-gen" style="background: #059669; margin-top: 1.5rem;">
+                <i class="fas fa-file-word"></i> DOWNLOAD MODUL (.DOCX)
+            </button>
+        </section>
+    </div>
+
+    <footer>
+        <p style="font-size: 0.9rem; font-weight: 700;">Aplikasi Modul Ajar Pintar &copy; 2026</p>
+        <p style="font-size: 0.75rem;">Developed with ❤️ by <span class="dev-highlight">Galeri Famous Project</span></p>
+    </footer>
+
+    <script>
+        const db = {
+            "SD_MI": {
+                kelas: ["Fase A - Kelas 1", "Fase A - Kelas 2", "Fase B - Kelas 3", "Fase B - Kelas 4", "Fase C - Kelas 5", "Fase C - Kelas 6"],
+                mapel: ["--- UTAMA ---", "IPAS", "Bahasa Indonesia", "Matematika", "Pancasila", "PJOK", "--- SENI ---", "Seni Musik", "Seni Rupa", "Seni Teater", "Seni Tari", "--- AGAMA ---", "PAI", "Al-Qur'an Hadis", "Akidah Akhlak", "Fikih", "SKI", "Bahasa Arab", "--- MULOK ---", "Bahasa Daerah", "Ke-NU-an", "Kemuhammadiyahan", "BTQ"]
+            },
+            "SMP_MTS": {
+                kelas: ["Fase D - Kelas 7", "Fase D - Kelas 8", "Fase D - Kelas 9"],
+                mapel: ["--- UTAMA ---", "IPA", "IPS", "Bahasa Indonesia", "Matematika", "Bahasa Inggris", "Informatika", "Pancasila", "PJOK", "--- SENI ---", "Seni Musik", "Seni Rupa", "Seni Teater", "Seni Tari", "--- AGAMA ---", "Fikih", "SKI", "Al-Qur'an Hadis", "Akidah Akhlak", "Bahasa Arab", "--- MULOK ---", "Bahasa Daerah", "Tahfidz"]
+            },
+            "SMA_MA": {
+                kelas: ["Fase E - Kelas 10", "Fase F - Kelas 11", "Fase F - Kelas 12"],
+                mapel: ["--- UMUM ---", "Bahasa Indonesia", "Bahasa Inggris", "Matematika", "Sejarah", "Pancasila", "PJOK", "--- SENI ---", "Seni Musik", "Seni Rupa", "Seni Teater", "Seni Tari", "--- PILIHAN ---", "Biologi", "Fisika", "Kimia", "Ekonomi", "Sosiologi", "Geografi", "--- AGAMA ---", "Al-Qur'an Hadis", "Akidah Akhlak", "Fikih", "SKI", "Bahasa Arab", "Ushul Fikih", "Ilmu Tafsir"]
+            }
+        };
+
+        function updateUI() {
+            const j = document.getElementById('jenjang').value;
+            document.getElementById('kelas').innerHTML = db[j].kelas.map(k => `<option>${k}</option>`).join("");
+            document.getElementById('mapel').innerHTML = db[j].mapel.map(m => {
+                const isH = m.startsWith("---");
+                return `<option ${isH?'disabled':''} style="${isH?'font-weight:bold;color:#4338ca;background:#f1f5f9':''}">${m}</option>`;
+            }).join("");
+        }
+        updateUI();
+
+        function generate() {
+            const v = (id) => document.getElementById(id).value;
+            if(!v('nama') || !v('materi')) return alert("Mohon isi Nama & Materi!");
+            const isMadrasah = v('jenjang').includes('MI') || v('jenjang').includes('MTS') || v('jenjang').includes('MA');
+
+            const content = `
+                <div style="text-align:center; border-bottom: 3px solid #000; padding-bottom: 10px; margin-bottom: 25px;">
+                    <h2 style="margin:0; font-size:16pt;">MODUL AJAR KURIKULUM MERDEKA</h2>
+                    <h3 style="margin:5px 0; font-size:13pt;">TAHUN AJARAN ${v('tahun')}</h3>
+                    <h4 style="margin:0; font-size:12pt;">${v('sekolah').toUpperCase()}</h4>
+                </div>
+
+                <span class="section-header">1. KOMPONEN INFORMASI UMUM</span>
+                <table style="width:100%; margin-left: 15px; font-size: 11pt;">
+                    <tr><td width="35%">Nama Penyusun</td><td>: ${v('nama')}</td></tr>
+                    <tr><td>Satuan Pendidikan</td><td>: ${v('sekolah')}</td></tr>
+                    <tr><td>Mata Pelajaran</td><td>: ${v('mapel')}</td></tr>
+                    <tr><td>Jenjang / Kelas</td><td>: ${v('kelas')}</td></tr>
+                    <tr><td>Semester / TA</td><td>: ${v('semester')} / ${v('tahun')}</td></tr>
+                    <tr><td>Model Pembelajaran</td><td>: ${v('model_ajar')} (Deep Learning)</td></tr>
+                </table>
+                <span class="sub-header">Kompetensi Awal:</span>
+                <p>Peserta didik memiliki pemahaman dasar pendukung untuk topik ${v('materi')}.</p>
+                <span class="sub-header">Profil Pelajar Pancasila & PPRA:</span>
+                <p>Mandiri, Bernalar Kritis, Kreatif. ${isMadrasah ? '<br><b>PPRA:</b> Tasamuh, Syura, dan Tawassut.' : ''}</p>
+
+                <span class="section-header">2. KOMPONEN INTI</span>
+                <span class="sub-header">Tujuan Pembelajaran:</span>
+                <p>Setelah mempelajari ${v('materi')}, siswa mampu menganalisis konsep secara mendalam, berkolaborasi dalam tim, dan menerapkan pemahaman bermakna dalam kehidupan sehari-hari.</p>
+                <span class="sub-header">Pertanyaan Pemantik:</span>
+                <p>"Mengapa materi ${v('materi')} ini penting bagi kehidupan kalian di masa depan?"</p>
+                <span class="sub-header">Kegiatan (Alur MERDEKA):</span>
+                <p>1. Mulai dari Diri, 2. Eksplorasi Konsep, 3. Ruang Kolaborasi, 4. Demonstrasi Kontekstual, 5. Elaborasi Pemahaman, 6. Koneksi Antar Materi, 7. Aksi Nyata.</p>
+                <span class="sub-header">Asesmen:</span>
+                <p>Diagnostik (Awal), Formatif (Proses), dan Sumatif (Akhir).</p>
+                ${isMadrasah ? '<span class="sub-header">Internalisasi Keislaman:</span><p>Menghubungkan materi dengan dalil dan moderasi beragama.</p>' : ''}
+
+                <span class="section-header">3. LAMPIRAN</span>
+                <p>- LKPD (Terlampir), - Bahan Bacaan, - Glosarium, - Daftar Pustaka.</p>
+
+                <br><br>
+                <table style="width:100%; text-align:center;">
+                    <tr><td width="50%">Mengetahui,<br>Kepala Sekolah<br><br><br><br>____________________</td>
+                    <td width="50%">Penyusun,<br>Guru Mapel<br><br><br><br><strong>${v('nama')}</strong></td></tr>
+                </table>
+            `;
+            document.getElementById('editor').innerHTML = content;
+            if(window.innerWidth < 1150) document.getElementById('editor').scrollIntoView({behavior: "smooth"});
+        }
+
+        async function saveWord() {
+            const { Document, Packer, Paragraph, TextRun } = docx;
+            const lines = document.getElementById('editor').innerText.split('\n').filter(l => l.trim() !== "");
+            const doc = new Document({
+                sections: [{
+                    children: lines.map(line => new Paragraph({
+                        children: [new TextRun({ text: line, size: 24, font: "Times New Roman" })],
+                        spacing: { after: 120 }
+                    }))
+                }]
+            });
+            const blob = await Packer.toBlob(doc);
+            saveAs(blob, `Modul_Pintar_${document.getElementById('mapel').value}.docx`);
+        }
+    </script>
+</body>
+</html>
